@@ -1,13 +1,21 @@
 ' Rafael: Galera, pelo UC1, eu acho que é um material
 ' por solicitação, mas não tenho certeza
+' Pela UC12, não tenho certeza se a solicitacao de Cadastro só pode ser feita
+' com uma solicitação de Compra, mas coloquei o CadastroMaterial -- Compra,
+' porque parece ser o caso.
+
 
 @startuml
 'https://plantuml.com/class-diagram
 
-SolicitacaoDeCompra "0...*" -- Material
+Compra "0...*" -- Material
 TipoMaterial -- "0...*" Material
-SolicitacaoCadastroMaterial -- "1" Material
-SolicitacaoDeCompra "0...*"-- "1" Funcionario
+CadastroMaterial -- "1" Material
+CadastroMaterial -- Compra
+Compra "0...*"-- "1" Funcionario
+Compra -- GerenteArea
+Compra -- "1" StatusEspecial
+StatusEspecial -- GerenteArea
 
 class TipoMaterial {
     String nome
@@ -20,25 +28,38 @@ class Material {
     String codigo
     Boolean estaCadastrado
     Integer estoque
-    Integer minimoSolicitacao
+    Integer minimoCompra
     Integer minimoEstoque
-    Integer quantidadeComprada
 }
+
+
 
 class Funcionario {
     Integer quotaMensal
 }
 
-class SolicitacaoCadastroMaterial {
+class GerenteArea {
+
+}
+
+
+class CadastroMaterial {
     String funcionario
-    String gerente
     Boolean aceitado
 }
 
-class SolicitacaoDeCompra {
+
+class StatusEspecial {
+    Boolean especial
+    String motivoSolicitante
+    Boolean aprovado
+    String motivoGerente
+
+}
+
+class Compra {
     String quantidade
     String emailObservadorInfra
-    String emailObservadorGerente
     String status
     Date prazoEntrega
 }
