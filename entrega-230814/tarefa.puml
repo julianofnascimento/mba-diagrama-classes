@@ -1,0 +1,46 @@
+' Rafael: Galera, pelo UC1, eu acho que é um material
+' por solicitação, mas não tenho certeza
+
+@startuml
+'https://plantuml.com/class-diagram
+
+SolicitacaoDeCompra "0...*" -- Material
+TipoMaterial -- "0...*" Material
+SolicitacaoCadastroMaterial -- "1" Material
+SolicitacaoDeCompra "0...*"-- "1" Funcionario
+
+class TipoMaterial {
+    String nome
+    Boolean estaCadastrado
+}
+
+class Material {
+    String nome
+    String descricao
+    String codigo
+    Boolean estaCadastrado
+    Integer estoque
+    Integer minimoSolicitacao
+    Integer minimoEstoque
+    Integer quantidadeComprada
+}
+
+class Funcionario {
+    Integer quotaMensal
+}
+
+class SolicitacaoCadastroMaterial {
+    String funcionario
+    String gerente
+    Boolean aceitado
+}
+
+class SolicitacaoDeCompra {
+    String quantidade
+    String emailObservadorInfra
+    String emailObservadorGerente
+    String status
+    Date prazoEntrega
+}
+
+@enduml
