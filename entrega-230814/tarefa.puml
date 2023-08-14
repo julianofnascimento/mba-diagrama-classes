@@ -5,41 +5,41 @@
 ' porque parece ser o caso.
 
 
-@startuml
+@startuml SOMAES
 'https://plantuml.com/class-diagram
 
-Compra "0...*" -- Material
-TipoMaterial -- "0...*" Material
-CadastroMaterial -- "1" Material
-CadastroMaterial -- Compra
+' Compra "0...*" -- "1" Material
+TipoMaterial "0...*" -- "0...*" Material
+CadastroMaterial "1" -- MaterialCadastrado
 Compra "0...*"-- "1" Funcionario
-Compra -- GerenteArea
 Compra -- "1" StatusEspecial
-StatusEspecial -- GerenteArea
+Material <|-- MaterialEspecial
+Compra -- "0...1" MaterialEspecial
+Material <|-- MaterialCadastrado
+Compra -- "0...1" MaterialCadastrado
 
 class TipoMaterial {
     String nome
-    Boolean estaCadastrado
 }
 
 class Material {
     String nome
     String descricao
+}
+
+class MaterialEspecial {
+    String motivoSolicitacao
+}
+
+class MaterialCadastrado {
     String codigo
-    Boolean estaCadastrado
     Integer estoque
     Integer minimoCompra
     Integer minimoEstoque
 }
 
-
-
 class Funcionario {
     Integer quotaMensal
-}
-
-class GerenteArea {
-
 }
 
 
@@ -50,8 +50,6 @@ class CadastroMaterial {
 
 
 class StatusEspecial {
-    Boolean especial
-    String motivoSolicitante
     Boolean aprovado
     String motivoGerente
 
